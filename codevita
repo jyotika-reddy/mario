@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+ 
+int main() 
+{ 
+    int t, r, c, JC, CC; 
+    cin >> t; 
+    cin >> JC; 
+    cin >> CC; 
+    cin >> r >> c; 
+    vector<string> screen(r); 
+    for (int i = 0; i < r; ++i) 
+    { 
+        string temp; 
+        cin >> temp; 
+        screen[i] = temp; 
+    } 
+    int LCN = 0; 
+    for (int j = 0; j < c; ++j) 
+    { 
+        int jump = 0; 
+        int coins = 0; 
+        bool flag = 0; 
+        int temp = 0; 
+        if (screen[r - 1][j] == 'H') 
+            flag = 1; 
+        for (int i = r - 2; i >= 0; --i) 
+        { 
+            if (!flag and screen[i][j] == 'C') 
+                jump = (r - i - 1), coins++; 
+            else if (flag and screen[i][j] == '0') 
+            { 
+                jump = (r - i - 1); 
+                break; 
+            } 
+        } 
+        if (flag) 
+            temp = jump * JC; 
+        else if (!flag and coins) 
+            temp = jump * JC - coins * CC; 
+        else 
+            temp = 1; 
+ 
+        if (t < temp) 
+        { 
+            cout << LCN; 
+            break; 
+        } 
+        t -= temp; 
+        LCN = j; 
+    } 
+    if (LCN == c - 1) 
+        cout << t; 
+    return 0; 
+}
